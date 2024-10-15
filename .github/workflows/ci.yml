@@ -1,13 +1,13 @@
-name: Test Automation
+name: Test and Notify
 
 on:
-  push: # Trigger this on code push
+  push:
     branches:
-      - main # Only for the main branch
+      - main
 
 jobs:
-  test: # Job name
-    runs-on: ubuntu-latest # Environment to run the tests
+  test-and-notify:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -15,8 +15,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.x" # Specify Python version
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt  # Ensure smtplib or other dependencies are installed
 
       - name: Run tests
         run: |
-          python test_script.py  # Run your test script
+          python test_script.py  # Your test script
+
+      - name: Send email
+        run: |
+          python send_email.py  # Your email script

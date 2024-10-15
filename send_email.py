@@ -1,27 +1,31 @@
 import smtplib
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 def send_email(subject, body):
-    msg = MIMEText(body)
+    sender_email = "shubhamrathod172000@gmail.com"
+    receiver_email = "sandip90306@gmail.com"
+    password = "kohu iafh afsv himb"
+
+    # Create the email headers
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
     msg['Subject'] = subject
-    msg['From'] = 'shubhamrathod172000@gmail.com'
-    msg['To'] = 'sandip90306@gmail.com'
 
-    with smtplib.SMTP('smtp.gmail.com', 587) as server:
-        server.starttls()
-        server.login('shubhamrathod172000@gmail.com', 'Gmail.com!')
-        server.send_message(msg)
+    # Attach the body of the email
+    msg.attach(MIMEText(body, 'plain'))
 
-def check_test_results(test_passed):
-    if test_passed:
-        subject = "Test Results: Passed"
-        body = "Congratulations! All tests have passed successfully."
-    else:
-        subject = "Test Results: Failed"
-        body = "Some tests have failed. Please check the code for errors."
+    # Send the email using SMTP
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)  # Use your SMTP server here
+        server.starttls()  # Enable encryption
+        server.login(sender_email, password)  # Log in to your email account
+        server.sendmail(sender_email, receiver_email, msg.as_string())  # Send the email
+        server.quit()
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"Error: {e}")
 
-    send_email(subject, body)
-
-# Example usage based on test result
-test_passed = False  # Simulate test result
-check_test_results(test_passed)
+# Example usage
+send_email("Test Results", "All tests passed! No issues found.")

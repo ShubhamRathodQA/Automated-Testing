@@ -1,0 +1,22 @@
+name: Test Automation
+
+on:
+  push: # Trigger this on code push
+    branches:
+      - main # Only for the main branch
+
+jobs:
+  test: # Job name
+    runs-on: ubuntu-latest # Environment to run the tests
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x" # Specify Python version
+
+      - name: Run tests
+        run: |
+          python test_script.py  # Run your test script

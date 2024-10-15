@@ -1,4 +1,4 @@
-name: Test and Notify
+name: Test Automation
 
 on:
   push:
@@ -6,8 +6,9 @@ on:
       - main
 
 jobs:
-  test-and-notify:
+  test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -19,12 +20,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt  # Ensure smtplib or other dependencies are installed
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run tests
         run: |
-          python test_script.py  # Your test script
+          python test_script.py  # Runs your test script
 
-      - name: Send email
+      - name: Send Email Notification
         run: |
-          python send_email.py  # Your email script
+          python send_email.py  # Runs your email script

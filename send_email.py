@@ -4,7 +4,7 @@ from email.mime.multipart import MIMEMultipart
 
 def send_email(subject, body):
     sender_email = "shubhamrathod172000@gmail.com"
-    receiver_email = "rathodshubhamqa@gmail.com"
+    receiver_email = "meghana@betasys.ai"
     password = "kohu iafh afsv himb"
 
     # Create the email headers
